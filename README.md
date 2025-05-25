@@ -66,7 +66,9 @@ An extension method is provided to convert any IEnumerable<T> to a RecordList<T>
 var recordList = myEnumerable.ToRecordList();
 ```
 
-Performance
+---
+
+## Performance
 - Equality and hashing are optimized but inherently linear time operations.
 - Suitable for collections of moderate size where structural equality is required.
 - For very large collections, consider the performance impact of equality and hashing.
