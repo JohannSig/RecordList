@@ -48,16 +48,36 @@ Key features:
 ## Usage
 
 ```csharp
-var list = new RecordList<int>(new[] {1, 2, 3});
-var empty = RecordList<int>.Empty;
+public record Person(string Name, int Age);
 
-// Equality works structurally
-var list1 = new RecordList<string>(["a", "b"]);
-var list2 = new RecordList<string>(["a", "b"]);
-Console.WriteLine(list1.Equals(list2)); // True
+public record Group(string GroupName, RecordList<Person> Members);
 
-// Use in records for deep equality
-public record Group(string Name, RecordList<Person> Members);
+var groupA = new Group(
+    "Team Alpha",
+    new RecordList<Person>(
+        new[] { new Person("Alice", 30), new Person("Bob", 25) }
+    )
+);
+
+var groupB = new Group(
+    "Team Alpha",
+    new RecordList<Person>(
+        new[] { new Person("Alice", 30), new Person("Bob", 25) }
+    )
+);
+
+var groupC = new Group(
+    "Team Alpha",
+    new RecordList<Person>(
+        new[] { new Person("Alice", 30), new Person("Charlie", 25) } // Note: Bob replaced by Charlie
+    )
+);
+
+// groupA and groupB are Equal because their RecordList<Person> Members have identical elements
+Console.WriteLine(groupA == groupB);  // True
+
+// groupA and groupC are Not Equal because Members differ by one Person
+Console.WriteLine(groupA == groupC);  // False
 ```
 
 ## Extensions
